@@ -1,0 +1,43 @@
+mixin outputRating(rating)
+    - for (var i = 1; i <= rating; i++)
+        span.glyphicon.glyphicon-star
+    - for (i = rating; i < 5; i++)
+        span.glyphicon.glyphicon-star-empty
+
+mixin formatDate(dateString)
+    -var date = new Date(dateString);
+    -var d = date.getDate();
+    //- -var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    -var monthNames = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ];
+    -var m = monthNames[date.getMonth()];
+    -var y = date.getFullYear();
+    -var output = d + ' ' + m + ' ' + y;
+    =output
+
+mixin carouselInner(descriptions)
+    - for (var i = 0; i < descriptions.length; i++)
+        - if (i === 0) {
+            .active.item(data-slide-number=i)
+                img(src=descriptions[i].image)
+        - }
+        - else
+            .item(data-slide-number=i)
+                img(src=descriptions[i].image)
+
+mixin carouselText(descriptions)
+    - var i = 0
+    each descrip in descriptions
+        div(id="slide-content-" + i)
+            h3 #{descrip.title}
+            p #{descrip.description}
+            //- p.sub-text
+            //-     | Giá: #{facility.price}
+        - i++
+
+mixin carouselThumb(descriptions)
+    - var i = 0
+    each descrip in descriptions
+        li.col-sm-2
+                a.thumbnail(id="#carousel-selector-" + i)
+                    img(src=descrip.image)
+        - i++
