@@ -5,11 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var debug = require('debug')('Express4');
+var session = require("express-session");
+var passport = require("passport");
+
+require('./models/db');
+require("./config/passport")(passport);
 
 
 // routes define
 var home = require("./routes/home");
-var admin = require("./routes/admin")
+var employer = require("./routes/employer");
+var auth = require("./routes/auth")(passport);
+
 
 // setup server
 var app = express();
@@ -33,12 +40,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'thesecret',
+    saveUninitialized: false,
+    resave: false
+}))
 
 
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use("/", home);
-app.use("/admin", admin)
-
+app.use("/employer", employer);
+app.use("/auth", auth);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 
-var SanPhamSchemal = new mongoose.Schema({
+var SanPhamSchema = new mongoose.Schema({
     tenSanPham: String,
     donGia: Number,
     anh: String
@@ -9,4 +9,4 @@ var SanPhamSchemal = new mongoose.Schema({
         usePushEach: true // add this becasue $pushall is nolonger support in mongose 3.4>
     });
 
-mongoose.model('SanPham', SanPhamSchemal);
+mongoose.model('SanPham', SanPhamSchema);

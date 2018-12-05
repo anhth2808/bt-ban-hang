@@ -1,20 +1,23 @@
 var mongoose = require('mongoose');
 
-var SanPhamSchemal = new mongoose.Schema({
+var SanPhamSchema = new mongoose.Schema({
     maSanPham: String,
-    Soluong: number,
+    tenSanPham: String,
+    donGia: Number,
+    soLuong: Number,
 })
 
-var DonHangSchemal = new mongoose.Schema({
+var DonHangSchema = new mongoose.Schema({
+    tenKhachHang: String,
     diaChi: String,
     dienThoai: String,
     ngayDatHang: Date,
     ngayGiaoHang: Date,
     ghiChu: String,
-    sanPham: [SanPhamSchemal],
+    sanPham: [SanPhamSchema],
     thanhTien: Number
 }, {
     usePushEach: true // add this becasue $pushall is nolonger support in mongose 3.4>
 });
 
-mongoose.model('DonHang', DonHangSchemal);
+mongoose.model('DonHang', DonHangSchema);
