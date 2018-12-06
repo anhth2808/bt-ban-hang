@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var debug = require('debug')('Express4');
 var session = require("express-session");
 var passport = require("passport");
+var MongoStore = require("connect-mongo")(session);
+
+var mongoose = require("mongoose");
+
 
 require('./models/db');
 require("./config/passport")(passport);
@@ -43,9 +47,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'thesecret',
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    store: new MongoStore({mongooseConnection: mongoose.connection}),
+    cookie: { maxAge: 180 * 60 * 1000 }
 }))
 
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
 
 app.use(passport.initialize())
 app.use(passport.session())
