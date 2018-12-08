@@ -35,15 +35,15 @@ $(document).ready(function(){
 
 // window.onload = myFunction;
 
-function onClick () {
-	// body...
-	if (confirm('Bạn có muốn thêm đơn hàng không!') == true) {
-		var x = document.getElementById("sl").innerHTML;
-		var y = parseInt(x);
-		y = y + 1;
-		document.getElementById("sl").innerHTML = y.toString();
-	}
-}
+// function onClick () {
+// 	// body...
+// 	if (confirm('Bạn có muốn thêm đơn hàng không!') == true) {
+// 		var x = document.getElementById("sl").innerHTML;
+// 		var y = parseInt(x);
+// 		y = y + 1;
+// 		document.getElementById("sl").innerHTML = y.toString();
+// 	}
+// }
 
 filterSelection("all")
 function filterSelection(c) {

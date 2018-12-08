@@ -110,10 +110,7 @@ router.post("/submit", function (req, res) {
     }
     var cart = new Cart(req.session.cart ? req.session.cart : { sanphams: {} });
 
-    // console.log("cart:", cart);
-    // console.log("cart-array: ", cart.generateArray());
-
-
+    // define req.body
     var tenKhachHang= req.body.tenKhachHang;
     var diaChi = req.body.diaChi;
     var dienThoai = req.body.dienThoai;
