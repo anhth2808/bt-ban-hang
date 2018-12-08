@@ -31,6 +31,14 @@ router.get("/", checkAuth, function(req, res, next) {
 
 /* SanPham controller */
 
+router.get("/form", function(req, res, next) {
+  res.render("sanpham-post", {});
+})
+
+
+
+
+
 /* GET list SanPham */
 router.get("/sanpham", function(req, res, next) {
 
@@ -70,6 +78,7 @@ router.post("/sanpham", function(req, res) {
     .create({
       tenSanPham: req.body.tenSanPham,
       donGia: req.body.donGia,
+      soLuong: req.body.soLuong,
       anh: req.body.anh
     }, function(err, sp) {
       if (err) {
@@ -97,6 +106,7 @@ router.put("/sanpham/:id", function(req, res) {
 
       sp.tenSanPham = req.body.tenSanPham;
       sp.donGia = req.body.donGia;
+      sp.soLuong = req.body.soLuong;
       sp.anh = req.body.anh;
 
       sp.save(function(err, sp) {

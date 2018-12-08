@@ -18,6 +18,8 @@ html
         // Load app CSS
         link(rel='stylesheet', href='/css/myCSS.css')
         // Load app JavaScript
+        
+        block head
 
     body
         header
@@ -99,7 +101,7 @@ html
                     #navbarSupportedContent.collapse.navbar-collapse.col-md-9
                         ul.navbar-nav
                             li.nav-item.active
-                                a.nav-link(href='')
+                                a.nav-link(href='/')
                                     span.fas.fa-home
                             li.nav-item.dropdown
                                 a#text-menu.nav-link.dropdown-toggle.text-center(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
@@ -149,10 +151,10 @@ html
                             .format-order
                                 .order
                                     span#my-order 
-                                        a(href="/shoping-cart") Đơn hàng của bạn
+                                        a(href="/shopping-cart") Đơn hàng của bạn
                                 #amount
                                     | Số lượng
-                                    span#sl 0
+                                    span#sl #{tongSoLuong}
         section
             .container
                 .row

@@ -14,30 +14,56 @@ mixin formatDate(dateString)
     -var output = d + ' ' + m + ' ' + y;
     =output
 
-mixin carouselInner(descriptions)
-    - for (var i = 0; i < descriptions.length; i++)
-        - if (i === 0) {
-            .active.item(data-slide-number=i)
-                img(src=descriptions[i].image)
-        - }
-        - else
-            .item(data-slide-number=i)
-                img(src=descriptions[i].image)
+mixin showListSanPham(sp)
+    - for (var i = 0; i < sp.length; i++)
+        .col-6.col-md-3.product.khangdan
+            .img-pro
+                img(src='/images/gokhangdan.jpg', alt='')
+            ul
+                li
+                    span.price #{sp[i].donGia}đ/ 50Kg
+                li
+                    a(href='#') #{sp[i].tenSanPham}
+                li
+                    i.fas.fa-check
+                    p Hết hàng
+                    a.btn.btn-success(href="/add-to-cart/" + sp[i]._id, onclick='onClick()') Thêm vào đơn
 
-mixin carouselText(descriptions)
-    - var i = 0
-    each descrip in descriptions
-        div(id="slide-content-" + i)
-            h3 #{descrip.title}
-            p #{descrip.description}
-            //- p.sub-text
-            //-     | Giá: #{facility.price}
-        - i++
 
-mixin carouselThumb(descriptions)
-    - var i = 0
-    each descrip in descriptions
-        li.col-sm-2
-                a.thumbnail(id="#carousel-selector-" + i)
-                    img(src=descrip.image)
-        - i++
+mixin showCart(cart)
+    -for (var i = 0; i < cart.length; i++)
+        .ifo-order
+            .title-pro
+                li.img-pro-order
+                    img(src='images/gao-lut-huyet-rong.jpg', alt='')
+                li.name-product
+                    span #{cart[i].sanpham.tenSanPham}
+                li.product-price #{cart[i].sanpham.donGia} đ
+                li.product-quantity
+                    input.input-text(type='number', step='1', min='0', name='', value= cart[i].soLuong, title='SL', size='4')
+                li #{cart[i].tongTien} đ
+                li.product-remove
+                    a(href='') X
+                    
+mixin showCart2(cart)
+    -for (var i = 0; i < cart.length; i++)
+        ul.b-d
+            li.product-order
+                ul
+                    li.img-order
+                        img(src='images/gokhangdan.jpg', alt='')
+                    li
+                        span #{cart[i].sanpham.tenSanPham}
+            li.price-order #{cart[i].sanpham.donGia} đ
+            li.amount-order
+                //- input.input-text(type='number', step='1', min='0', name='', value=cart[i].soLuong, title='SL', size='4')
+                p #{cart[i].soLuong}
+                    span
+                        a.btn.btn-default(href="/increase/" + cart[i].sanpham._id)
+                            i.up.arrow
+                    span
+                        a.btn.btn-default(href="/reduce/" + cart[i].sanpham._id)
+                            i.down.arrow
+            li.sum-order #{cart[i].tongTien} đ
+            li.product-remove
+                a(href="/remove/" + cart[i].sanpham._id) X

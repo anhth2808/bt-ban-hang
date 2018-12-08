@@ -28,7 +28,7 @@ $(document).ready(function(){
 	});
 
 	$('#header-logo').on('click', function () {
-		window.location = "index.html";
+		window.location = "/";
 	});
 
 });
@@ -77,12 +77,12 @@ function RemoveClass(element, name) {
 }
 
 // Add active class to the current button
-var myBtn = document.getElementById("myBtn");
-var btnSearch = myBtn.getElementsByClassName("btnSearch");
-for (var i = 0; i < btnSearch.length; i++) {
-	btnSearch[i].addEventListener("click", function () {
-		var current = document.getElementsByClassName("active");
-		current[0].className = current[0].className.replace(" active", "");
-		this.className += " active";
-	});
-}
+// var myBtn = document.getElementById("myBtn");
+// var btnSearch = myBtn.getElementsByClassName("btnSearch");
+// for (var i = 0; i < btnSearch.length; i++) {
+// 	btnSearch[i].addEventListener("click", function () {
+// 		var current = document.getElementsByClassName("active");
+// 		current[0].className = current[0].className.replace(" active", "");
+// 		this.className += " active";
+// 	});
+// }

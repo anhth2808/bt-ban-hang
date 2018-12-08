@@ -1,5 +1,5 @@
 extends layout
-
+include _includes/sharedHTMLfunctions
 
 block content
     section
@@ -121,6 +121,7 @@ block content
                                 i.fab.fa-product-hunt
                                 |  Sản Phẩm Lúa Gạo
                         .row.content-product
+                            +showListSanPham(listSanPham)
                             .col-6.col-md-3.product.khangdan
                                 .img-pro
                                     img(src='/images/gokhangdan.jpg', alt='')
