@@ -26,9 +26,13 @@ var DonHang = mongoose.model("DonHang");
 
 
 
-
-
-
+var checkAuth = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/employer/login");
+  }
+}
 
 
 var sendJSONresponse = function (res, status, content) {
@@ -37,13 +41,7 @@ var sendJSONresponse = function (res, status, content) {
 };
 
 
-var checkAuth = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect("/employer/login");
-  }
-}
+
 
 
 router.get("/", checkAuth, function(req, res, next) {
@@ -54,7 +52,7 @@ router.get("/", checkAuth, function(req, res, next) {
 
 /* SanPham controller */
 
-router.get("/form", function(req, res, next) {
+router.get("/form", checkAuth, function(req, res, next) {
   res.render("sanpham-post", {});
 })
 
@@ -63,7 +61,7 @@ router.get("/form", function(req, res, next) {
 
 
 /* GET list SanPham */
-router.get("/sanpham", function(req, res, next) {
+router.get("/sanpham", checkAuth, function(req, res, next) {
 
   SanPham
     .find()
@@ -81,7 +79,7 @@ router.get("/sanpham", function(req, res, next) {
     })
 })
 
-router.get("/sanpham/:id", function(req, res) {
+router.get("/sanpham/:id", checkAuth, function(req, res) {
   SanPham.findById(req.params.id, function(err, sp) {
     if (!sp) {
       sendJSONresponse(res, 404, {
@@ -96,7 +94,7 @@ router.get("/sanpham/:id", function(req, res) {
   })
 })
 
-router.post("/sanpham", upload.single('anh'), function(req, res) {
+router.post("/sanpham", checkAuth, upload.single('anh'), function(req, res) {
   // var file = './public/upload/' + req.file.filename;
   // var fs = require('fs');
 
@@ -150,7 +148,7 @@ router.put("/sanpham/:id", function(req, res) {
 })
 
 
-router.delete("/sanpham/:id", function(req, res) {
+router.delete("/sanpham/:id", checkAuth, function(req, res) {
 
   SanPham
     .findByIdAndRemove(req.params.id)
@@ -175,7 +173,7 @@ router.delete("/sanpham/:id", function(req, res) {
 
 /* DonHang controller */
 
-router.get("/donhang", function(req, res) {
+router.get("/donhang", checkAuth, function(req, res) {
   DonHang
     .find()
     .exec(
@@ -190,7 +188,7 @@ router.get("/donhang", function(req, res) {
     )
 })
 
-router.get("/donhang/:donhangid", function(req, res) {
+router.get("/donhang/:donhangid", checkAuth, function(req, res) {
   var donhangid = req.params.donhangid;
   DonHang
   .findById(donhangid)
@@ -210,7 +208,7 @@ router.get("/donhang/:donhangid", function(req, res) {
   )
 })
 
-router.post("/donhang", function(req, res) {
+router.post("/donhang", checkAuth, function(req, res) {
 
   console.log("start");
   DonHang.create({
@@ -232,7 +230,7 @@ router.post("/donhang", function(req, res) {
   })
 })
 
-router.put("/donhang/:donhangid", function(req, res) {
+router.put("/donhang/:donhangid", checkAuth, function(req, res) {
   var donhangid = req.params.donhangid;
 
   DonHang
@@ -270,7 +268,7 @@ router.put("/donhang/:donhangid", function(req, res) {
     )
 })
 
-router.delete("/donhang/:donhangid", function(req, res) {
+router.delete("/donhang/:donhangid", checkAuth, function(req, res) {
   var donhangid = req.params.donhangid;
 
   DonHang
