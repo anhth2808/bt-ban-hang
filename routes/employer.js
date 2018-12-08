@@ -1,12 +1,35 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var router = express.Router();
+var multer = require('multer');
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '_' + file.originalname);
+  }
+});
+
+var upload = multer({ storage: storage });
 
 
 var Employer = mongoose.model("Employer");
 var SanPham = mongoose.model("SanPham");
 var DonHang = mongoose.model("DonHang");
+
+
+
+
+
+
+
+
+
+
+
+
 
 var sendJSONresponse = function (res, status, content) {
   res.status(status);
@@ -73,13 +96,20 @@ router.get("/sanpham/:id", function(req, res) {
   })
 })
 
-router.post("/sanpham", function(req, res) {
+router.post("/sanpham", upload.single('anh'), function(req, res) {
+  // var file = './public/upload/' + req.file.filename;
+  // var fs = require('fs');
+
+  // fs.unlink(file, function (e) {
+  //   if (e) throw e;
+  // });
+
   SanPham
     .create({
       tenSanPham: req.body.tenSanPham,
       donGia: req.body.donGia,
       soLuong: req.body.soLuong,
-      anh: req.body.anh
+      anh: './upload/' + req.file.filename
     }, function(err, sp) {
       if (err) {
         sendJSONresponse(res, 400, err);
@@ -181,6 +211,7 @@ router.get("/donhang/:donhangid", function(req, res) {
 })
 
 router.post("/donhang", function(req, res) {
+
   console.log("start");
   DonHang.create({
     tenKhachHang: req.body.tenKhachHang,

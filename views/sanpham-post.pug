@@ -11,7 +11,7 @@ block content
                             h3.panel-title Please Sign In
                         .panel-body
                             .alert.alert-danger
-                            form(role='form', action='/employer/sanpham', method='POST')
+                            form(role='form', action='/employer/sanpham', enctype="multipart/form-data", method='POST')
                                 fieldset
                                     .form-group
                                         input.form-control(placeholder='Ten San Pham', name='tenSanPham', type='text', autofocus='')
@@ -19,6 +19,8 @@ block content
                                         input.form-control(placeholder='Don Gia', name='donGia', type='number', value='')
                                     .form-group
                                         input.form-control(placeholder='So Luong', name='soLuong', type='number', value='')
+                                    .form-group
+                                        input.form-control(name="anh", type="file")
                                     button.btn.btn-lg.btn-success.btn-block(type='submit') Submit
 block script
 

@@ -18,16 +18,21 @@ mixin showListSanPham(sp)
     - for (var i = 0; i < sp.length; i++)
         .col-6.col-md-3.product.khangdan
             .img-pro
-                img(src='/images/gokhangdan.jpg', alt='')
+                img(src=sp[i].anh, alt='')
             ul
                 li
                     span.price #{sp[i].donGia}đ/ 50Kg
                 li
                     a(href='#') #{sp[i].tenSanPham}
                 li
-                    i.fas.fa-check
-                    p Hết hàng
-                    a.btn.btn-success(href="/add-to-cart/" + sp[i]._id, onclick='onClick()') Thêm vào đơn
+                    - if (sp[i].soLuong)
+                        i.fas.fa-check
+                        p Còn hàng
+                        a.btn.btn-success(href="/add-to-cart/" + sp[i]._id) Thêm vào đơn
+                    - else
+                        i.fas.fa-times
+                        p Hết hàng
+                        a.btn.btn-success(href="#", style="pointer-events: none; cursor: default;") Thêm vào đơn
 
 
 mixin showCart(cart)
