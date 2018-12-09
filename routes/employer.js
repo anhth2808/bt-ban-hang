@@ -45,7 +45,19 @@ var sendJSONresponse = function (res, status, content) {
 
 
 router.get("/", checkAuth, function(req, res, next) {
-  res.send(req.session);
+  Employer
+    .findById(req.session.passport.user.id)
+    .select("-password")
+    .exec(function(err, em) {
+      if (err) {
+        sendJSONresponse(res, 404, {
+          "message": "Employer is not found"
+        });
+        return;
+      }
+      res.render("employer", {profile: em});      
+    })
+
 })
 
 
@@ -53,7 +65,7 @@ router.get("/", checkAuth, function(req, res, next) {
 /* SanPham controller */
 
 router.get("/form", checkAuth, function(req, res, next) {
-  res.render("sanpham-post", {});
+  res.render("sanpham", {});
 })
 
 
@@ -63,9 +75,23 @@ router.get("/form", checkAuth, function(req, res, next) {
 /* GET list SanPham */
 router.get("/sanpham", checkAuth, function(req, res, next) {
 
+  // SanPham
+  //   .find()
+  //   .exec(function(err, sp) {
+  //     if (!sp) {
+  //       sendJSONresponse(res, 404, {
+  //         "message": "SanPham is not found"
+  //       });
+  //       return;
+  //     } else if (err) {
+  //       sendJSONresponse(res, 404, err);
+  //       return;
+  //     }
+  //     sendJSONresponse(res, 200, sp);
+  //   })
   SanPham
     .find()
-    .exec(function(err, sp) {
+    .exec(function (err, sp) {
       if (!sp) {
         sendJSONresponse(res, 404, {
           "message": "SanPham is not found"
@@ -75,10 +101,12 @@ router.get("/sanpham", checkAuth, function(req, res, next) {
         sendJSONresponse(res, 404, err);
         return;
       }
-      sendJSONresponse(res, 200, sp);
+      var data = JSON.parse(JSON.stringify(sp));
+      res.render("sanpham", {listSanPham: data});
     })
 })
 
+// GET detail sanpham
 router.get("/sanpham/:id", checkAuth, function(req, res) {
   SanPham.findById(req.params.id, function(err, sp) {
     if (!sp) {
@@ -94,6 +122,8 @@ router.get("/sanpham/:id", checkAuth, function(req, res) {
   })
 })
 
+
+// CREATE sanpham
 router.post("/sanpham", checkAuth, upload.single('anh'), function(req, res) {
   // var file = './public/upload/' + req.file.filename;
   // var fs = require('fs');
@@ -107,18 +137,21 @@ router.post("/sanpham", checkAuth, upload.single('anh'), function(req, res) {
       tenSanPham: req.body.tenSanPham,
       donGia: req.body.donGia,
       soLuong: req.body.soLuong,
-      anh: './upload/' + req.file.filename
+      anh: '/upload/' + req.file.filename
     }, function(err, sp) {
       if (err) {
         sendJSONresponse(res, 400, err);
         return;
       } else {
-        sendJSONresponse(res, 201, sp);
+        // sendJSONresponse(res, 201, sp);
+        res.redirect("/employer/sanpham");
       }
     })
 })
 
-router.put("/sanpham/:id", function(req, res) {
+
+// UPDATE sanpham
+router.post("/sanpham/update/:id", checkAuth, upload.single('anh'), function(req, res) {
   SanPham
     .findById(req.params.id)
     .exec(function(err, sp) {
@@ -132,23 +165,31 @@ router.put("/sanpham/:id", function(req, res) {
         return;
       }
 
+      var anh = sp.anh;
+      if (req.file) {
+        anh = '/upload/' + req.file.filename;
+      }
+
       sp.tenSanPham = req.body.tenSanPham;
       sp.donGia = req.body.donGia;
       sp.soLuong = req.body.soLuong;
-      sp.anh = req.body.anh;
+      sp.anh = anh;
 
       sp.save(function(err, sp) {
         if (err) {
           sendJSONresponse(res, 404, err);
           return;
-        } else sendJSONresponse(res, 200, sp)
+        } else {
+          // sendJSONresponse(res, 200, sp);
+          res.redirect("/employer/sanpham");
+        }
       });
 
     })
 })
 
-
-router.delete("/sanpham/:id", checkAuth, function(req, res) {
+// DELETE sanpham
+router.get("/sanpham/remove/:id", checkAuth, function(req, res) {
 
   SanPham
     .findByIdAndRemove(req.params.id)
@@ -161,8 +202,8 @@ router.delete("/sanpham/:id", checkAuth, function(req, res) {
         }
 
         console.log("SP id", req.params.id, "deleted");
-        sendJSONresponse(res, 204, null);
-
+        // sendJSONresponse(res, 204, null);
+        res.redirect("/employer/sanpham");
       }
     )
 })

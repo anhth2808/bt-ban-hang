@@ -35,20 +35,28 @@ mixin showListSanPham(sp)
                         a.btn.btn-success(href="#", style="pointer-events: none; cursor: default;") Thêm vào đơn
 
 
-mixin showCart(cart)
-    -for (var i = 0; i < cart.length; i++)
-        .ifo-order
-            .title-pro
-                li.img-pro-order
-                    img(src='images/gao-lut-huyet-rong.jpg', alt='')
-                li.name-product
-                    span #{cart[i].sanpham.tenSanPham}
-                li.product-price #{cart[i].sanpham.donGia} đ
-                li.product-quantity
-                    input.input-text(type='number', step='1', min='0', name='', value= cart[i].soLuong, title='SL', size='4')
-                li #{cart[i].tongTien} đ
-                li.product-remove
-                    a(href='') X
+mixin showListSanPham2(sp)
+    - for (var i = 0; i < sp.length; i++)
+        .col-6.col-md-3.product.vit
+            .img-pro
+                img(src=sp[i].anh, alt='')
+            ul
+                li
+                    span.price #{sp[i].donGia} đ/ 50Kg
+                li
+                    a(href='#') #{sp[i].tenSanPham}
+                li
+                    - if (sp[i].soLuong)
+                        i.fas.fa-check
+                        p Còn hàng
+                        p Số lượng: #{sp[i].soLuong} bao
+                    - else
+                        i.fas.fa-times
+                        p Hết hàng
+                        p Số lượng: #{sp[i].soLuong} bao
+                li
+                    a.edit(href='#', data-toggle='modal', data-target='#edit', id= sp[i]._id) Sửa
+                    a.remove(href='/employer/sanpham/remove/' + sp[i]._id) Xóa
                     
 mixin showCart2(cart)
     -for (var i = 0; i < cart.length; i++)
@@ -56,10 +64,10 @@ mixin showCart2(cart)
             li.product-order
                 ul
                     li.img-order
-                        img(src='images/gokhangdan.jpg', alt='')
+                        img(src=cart[i].sanpham.anh, alt='')
                     li
                         span #{cart[i].sanpham.tenSanPham}
-            li.price-order #{cart[i].sanpham.donGia} đ
+            li.price-order #{cart[i].sanpham.donGia} đ/50kg
             li.amount-order
                 //- input.input-text(type='number', step='1', min='0', name='', value=cart[i].soLuong, title='SL', size='4')
                 p #{cart[i].soLuong}

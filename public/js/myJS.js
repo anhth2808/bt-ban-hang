@@ -27,10 +27,11 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#header-logo').on('click', function () {
-		window.location = "/";
-	});
+	// $('#header-logo').on('click', function () {
+	// 	window.location = "/";
+	// });
 
+	// editButton();
 });
 
 // window.onload = myFunction;
@@ -86,3 +87,43 @@ function RemoveClass(element, name) {
 // 		this.className += " active";
 // 	});
 // }
+
+function editButton() {
+	let listSP = document.querySelector("#san-pham");
+	console.log(listSP);
+	listSP.addEventListener("click", function (e) {
+		console.log(e.target.className);
+		if (e.target.className === "edit") {
+			console.log(e.target.id);
+
+			let donGia;
+			let soLuong;
+			let tenSanPham;
+
+			let form = document.querySelector("#edit-form");
+			let record = e.target.parentNode.parentNode.childNodes;
+
+			console.log("form:", form);
+			console.log("record:", record);
+			// let id = e.target.id;
+
+			// let record = e.target.parentNode.parentNode.childNodes;
+
+			// let days = record[0].childNodes[1].textContent;
+			// let time = record[0].childNodes[3].textContent;
+			// let note = record[1].textContent;
+			// let cost = record[2].textContent;
+
+			// let form = document.querySelector("#edit-report-form");
+			// form.childNodes[0].setAttribute("action", "/edit/" + id);
+
+			// let input = form.childNodes[0].childNodes[1].childNodes;
+			// input[1].value = days + " " + time;
+			// input[3].value = note;
+			// input[5].value = cost;
+
+		}
+
+	});
+
+}

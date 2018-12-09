@@ -1,0 +1,69 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+
+block content
+    main.container
+        .row
+            .col-12.content
+
+                .container
+                    .row.add-product
+                        a.add(href='#', data-toggle='modal', data-target='#add') Thêm sản phẩm
+                    #add.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                        .modal-dialog(role='document')
+                            .modal-content
+                                .modal-header
+                                    h5#exampleModalLabel.modal-title Điền thông tin sản phẩm thêm
+                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                        span(aria-hidden='true') ×
+                                        // Dấu đóng cửa sổ
+                                form(action='#', method='post')
+                                    .modal-body
+                                        input(type='file', name='pic', accept='image/*')
+                                        input(type='text', placeholder=' Giá sản phẩm')
+                                        input(type='text', placeholder=' Tên sản phẩm')
+                                        input(type='number', placeholder=' Số lượng sản phẩm')
+                                    .modal-footer
+                                        button#bt.btn.btn-primary(type='submit') Hoàn tất
+                .content
+                    #san-pham
+                        .title-product
+                            span
+                                i.fab.fa-product-hunt
+                                |  Sản Phẩm
+                        .row.content-product
+                            +showListSanPham2(listSanPham)
+                            //- .col-6.col-md-3.product.khangdan
+                            //-     .img-pro
+                            //-         img(src='/images/gao-khang-dan.jpg', alt='')
+                            //-     ul
+                            //-         li
+                            //-             span.price 35.000 đ/ 10Kg
+                            //-         li
+                            //-             a(href='#') Gạo khang dân lẻ
+                            //-         li
+                            //-             i.fas.fa-check
+                            //-             p Còn hàng
+                            //-             | Số lượng 20 bao
+                            //-         li
+                            //-             a.edit(href='#', data-toggle='modal', data-target='#edit') Sửa
+                            //-             a.remove(href='#') Xóa
+                            
+                            #edit.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                .modal-dialog(role='document')
+                                    .modal-content
+                                        .modal-header
+                                            h5#exampleModalLabel.modal-title Điền thông tin sửa
+                                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                span(aria-hidden='true') ×
+                                                // Dấu đóng cửa sổ
+                                        form(action='#', method='post')
+                                            .modal-body
+                                                input(type='file', name='anh', accept='image/*')
+                                                input(type='text', placeholder=' Giá sản phẩm')
+                                                input(type='text', placeholder=' Tên sản phẩm')
+                                                input(type='number', placeholder=' Số lượng sản phẩm')
+                                            .modal-footer
+                                                button#bt.btn.btn-primary(type='submit') Hoàn tất
