@@ -80,3 +80,71 @@ mixin showCart2(cart)
             li.sum-order #{cart[i].tongTien} đ
             li.product-remove
                 a(href="/remove/" + cart[i].sanpham._id) X
+
+mixin showListDonHang(listDonHang)
+    -for (var i = 0; i < listDonHang.length; i++)
+        .list-order
+            ul.f-list-order
+                li.name-customer #{listDonHang[i].tenKhachHang}
+                li.address #{listDonHang[i].diaChi}
+                li.phone #{listDonHang[i].dienThoai}
+                //- li.already
+                //-     input(type='radio', name='checkbox2', value='')
+                //- li.no
+                //-     input(type='radio', name='checkbox2', value='', checked='checked')
+                li
+                    a(href='/employer/donhang/' + listDonHang[i]._id) Chi tiết đơn hàng
+
+mixin showDonHangChiTiet(dh)
+    .content
+        .title-order
+            ul
+                li.name-customer Tên khách hàng
+                li.address Địa chỉ
+                li.phone Số điện thoại
+                li.set-data Ngày đặt hàng
+                li.sum-price Thành tiền
+        .list-order
+            ul.f-list-order
+                li.name-customer #{dh.tenKhachHang}
+                li.address #{dh.diaChi}
+                li.phone #{dh.dienThoai}
+                li.set-data #{dh.ngayDatHang}
+                li.sum-price #{dh.thanhTien} đ
+        .title-product.text-center
+            span Chi tiết đơn hàng
+        .the-order
+            ul.format-order
+                li.product-order Sản phẩm
+                li.price-order Giá
+                li.amount-order Số lượng
+                //- li.delivery-date Ngày giao hàng
+        - for (var i = 0 ; i < dh.sanPham.length; i++)
+            .the-order
+                ul.b-d
+                    li.product-order
+                        ul
+                            li.img-order
+                                img(src='images/gao-lut-huyet-rong.jpg', alt='')
+                            li
+                                span #{dh.sanPham[i].tenSanPham}
+                    li.price-order #{dh.sanPham[i].donGia} đ
+                    li.amount-order
+                        input.input-text(type='number', step='1', min='0', name='', value=dh.sanPham[i].soLuong, title='SL', size='4')
+                    //- - if(dh.sanPham[i].ngayGiaoHang)
+                    //-     li.delivery-date #{dh.sanPham[i].ngayGiaoHang}
+                    //- - else
+                    //-     li.delivery-date Chưa xác định
+        //- .the-order
+        //-     ul.b-d
+        //-         li.product-order
+        //-             ul
+        //-                 li.img-order
+        //-                     img(src='images/gokhangdan.jpg', alt='')
+        //-                 li
+        //-                     span Gạo siêu ngon
+        //-         li.price-order 25000 đ
+        //-         li.amount-order
+        //-             input.input-text(type='number', step='1', min='0', name='', value='1', title='SL', size='4')
+        //-         li.sum-order 25000 đ
+        //-         li.delivery-date 12 - 2 - 2018

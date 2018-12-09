@@ -224,7 +224,11 @@ router.get("/donhang", checkAuth, function(req, res) {
           return;
         }
         
-        sendJSONresponse(res, 200, dh);
+        // sendJSONresponse(res, 200, dh);
+        var data = JSON.parse(JSON.stringify(dh));
+        console.log("data:", data);
+        // res.send(data);
+        res.render("donhang", {listDonHang: data});
       }
     )
 })
@@ -244,7 +248,10 @@ router.get("/donhang/:donhangid", checkAuth, function(req, res) {
         sendJSONresponse(res, 404, err);
         return;
       }
-      sendJSONresponse(res, 200, dh);
+      // sendJSONresponse(res, 200, dh);
+      var data = JSON.parse(JSON.stringify(dh));
+      console.log("data:", data);
+      res.render("donhang-chitiet", {donHang: data});
     }
   )
 })
