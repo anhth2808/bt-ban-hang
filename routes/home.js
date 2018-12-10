@@ -63,7 +63,7 @@ router.get("/add-to-cart/:id", function(req, res, next) {
 
 router.get("/shopping-cart", function(req, res, next) {
     if (!req.session.cart) {
-        res.render("/");
+        res.redirect("/");
     }
     var cart = new Cart(req.session.cart);
 
