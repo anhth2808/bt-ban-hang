@@ -98,7 +98,8 @@ router.get("/sanpham", checkAuth, function(req, res, next) {
         });
         return;
       } else if (err) {
-        sendJSONresponse(res, 404, err);
+        // sendJSONresponse(res, 404, err);
+        res.redirect("/employer");
         return;
       }
       var data = JSON.parse(JSON.stringify(sp));
@@ -140,7 +141,8 @@ router.post("/sanpham", checkAuth, upload.single('anh'), function(req, res) {
       anh: '/upload/' + req.file.filename
     }, function(err, sp) {
       if (err) {
-        sendJSONresponse(res, 400, err);
+        // sendJSONresponse(res, 400, err);
+        res.redirect("/employer");
         return;
       } else {
         // sendJSONresponse(res, 201, sp);
@@ -156,12 +158,14 @@ router.post("/sanpham/update/:id", checkAuth, upload.single('anh'), function(req
     .findById(req.params.id)
     .exec(function(err, sp) {
       if (!sp) {
-        sendJSONresponse(res, 404, {
-          "message": "sp is not found"
-        });
+        // sendJSONresponse(res, 404, {
+        //   "message": "sp is not found"
+        // });
+        res.redirect("/employer");
         return;
       } else if (err) {
-        sendJSONresponse(res, 404, err);
+        // sendJSONresponse(res, 404, err);
+        res.redirect("/employer");
         return;
       }
 
@@ -177,7 +181,8 @@ router.post("/sanpham/update/:id", checkAuth, upload.single('anh'), function(req
 
       sp.save(function(err, sp) {
         if (err) {
-          sendJSONresponse(res, 404, err);
+          // sendJSONresponse(res, 404, err);
+          res.redirect("/employer");
           return;
         } else {
           // sendJSONresponse(res, 200, sp);
